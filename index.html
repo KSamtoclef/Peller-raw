@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a0f24">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Peller & Jarvis White Wedding Fan Gifts — Demo</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+  <div id="demoBanner" class="demo-banner"></div>
+
+  <main class="app-shell">
+    <section id="landingScreen" class="screen active">
+      <header class="hero">
+        <div class="hero-topline">
+          <div class="brand">Peller <span>&</span> Jarvis</div>
+          <div class="hero-chip">WHITE WEDDING FAN GIFTS</div>
+        </div>
+
+        <div class="hero-frame">
+          <img id="heroImage" src="assets/images/hero.webp" alt="Peller and Jarvis white wedding celebration">
+          <div id="heroFallback" class="hero-fallback">
+            <span>💍</span>
+            <strong>Premium wedding image coming next</strong>
+          </div>
+        </div>
+
+        <p class="eyebrow">A SPECIAL WHITE WEDDING CELEBRATION</p>
+        <h1>Choose a Special Fan Gift</h1>
+        <p class="hero-copy">Select your preferred gift and complete the celebration steps.</p>
+        <button id="openGiftSelector" class="btn btn-gold btn-large pulse">VIEW AVAILABLE GIFTS</button>
+
+        <div class="gift-badges">
+          <span>🐄 Cow Gift</span>
+          <span>📶 Up to 100GB</span>
+          <span>💵 Up to ₦50,000</span>
+          <span>🎁 Surprise Gift</span>
+        </div>
+      </header>
+
+      <section class="mini-proof">
+        <div><strong>241K+</strong><span>Reactions</span></div>
+        <div><strong>68K+</strong><span>Shares</span></div>
+        <div><strong>7.8K+</strong><span>Comments</span></div>
+      </section>
+
+      <div id="landingConversation"></div>
+    </section>
+
+    <section id="registerScreen" class="screen">
+      <button class="back-button" data-screen="landingScreen">← Back</button>
+      <section class="panel invitation-card">
+        <p class="eyebrow dark">YOUR SELECTED GIFT</p>
+        <div id="selectedGiftSummary" class="selected-gift-summary"></div>
+        <h2>Enter Your Details</h2>
+
+        <label for="fullName">Full Name</label>
+        <input id="fullName" class="input" autocomplete="name" placeholder="Enter your full name">
+        <small id="fullNameError" class="field-error">Enter your full name.</small>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input id="phoneNumber" class="input" inputmode="tel" autocomplete="tel" placeholder="08012345678">
+        <small id="phoneError" class="field-error">Enter a valid Nigerian phone number.</small>
+
+        <button id="registrationProceed" class="btn btn-burgundy btn-large">CLICK TO PROCEED</button>
+      </section>
+    </section>
+
+    <section id="dataScreen" class="screen">
+      <button class="back-button" data-screen="registerScreen">← Back</button>
+      <section class="panel">
+        <p class="eyebrow dark">DATA GIFT SETUP</p>
+        <h2>Select Your Mobile Network</h2>
+        <p class="subcopy">Choose the network connected to your phone number.</p>
+        <div id="networkOptions" class="network-grid"></div>
+        <button id="dataProceed" class="btn btn-burgundy btn-large" disabled>CONTINUE WITH DATA GIFT</button>
+      </section>
+    </section>
+
+    <section id="shareScreen" class="screen">
+      <button class="back-button" data-screen="registerScreen">← Back</button>
+      <section class="panel share-panel">
+        <div class="status-pill">FINAL STEP REQUIRED</div>
+        <h2>Complete the Celebration Share</h2>
+        <p id="sharePersonalCopy" class="subcopy"></p>
+        <div id="shareGiftBadge" class="selected-gift-summary compact"></div>
+
+        <div class="progress-wrap">
+          <div class="progress-ring" id="progressRing"><span id="progressPercent">0%</span></div>
+          <div class="progress-copy">
+            <strong id="progressCount">0 of 8 completed</strong>
+            <span id="progressMessage">Share on WhatsApp to begin.</span>
+          </div>
+        </div>
+
+        <button id="shareTopButton" class="btn btn-whatsapp btn-large pulse">SHARE CELEBRATION ON WHATSAPP</button>
+
+        <div class="steps">
+          <div><b>1</b><span>Tap the WhatsApp button.</span></div>
+          <div><b>2</b><span>Send the prepared celebration message.</span></div>
+          <div><b>3</b><span>Return here to update your progress.</span></div>
+        </div>
+
+        <div class="progress-bar"><div id="progressBarFill"></div></div>
+        <button id="openGiftPage" class="btn btn-gold btn-large" disabled>COMPLETE SHARING TO UNLOCK</button>
+      </section>
+    </section>
+
+    <section id="finalScreen" class="screen">
+      <section class="final-hero">
+        <span class="status-pill success">SHARING COMPLETED</span>
+        <h2>Your White Wedding Gift Page Is Ready</h2>
+        <p id="finalPersonalCopy"></p>
+      </section>
+      <div id="giftDestinationList" class="destination-list"></div>
+      <div id="finalConversation"></div>
+    </section>
+  </main>
+
+  <div id="giftSheet" class="sheet-overlay" aria-hidden="true">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-heading">
+        <div>
+          <p class="eyebrow dark">WHITE WEDDING GIFTS</p>
+          <h2>Choose Your Preferred Gift</h2>
+        </div>
+        <button id="closeGiftSelector" class="icon-button">×</button>
+      </div>
+      <div id="giftOptionList" class="gift-option-list"></div>
+    </div>
+  </div>
+
+  <div id="transitionOverlay" class="transition-overlay">
+    <div class="envelope-scene">
+      <div class="envelope">✉️</div>
+      <div class="seal">✓</div>
+      <h3 id="transitionTitle">Saving Your Selection…</h3>
+      <p id="transitionText">Preparing your next step.</p>
+    </div>
+  </div>
+
+  <div id="shareResultModal" class="modal-overlay">
+    <div class="modal-card">
+      <div id="shareResultIcon" class="modal-icon">✓</div>
+      <h3 id="shareResultTitle"></h3>
+      <p id="shareResultText"></p>
+      <div class="modal-actions">
+        <button id="shareResultPrimary" class="btn btn-gold">CONTINUE</button>
+        <button id="shareResultAgain" class="btn btn-burgundy">SHARE AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exitModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon">🎁</div>
+      <h3>Your Current Step Is Incomplete</h3>
+      <p>You are about to leave before completing this process. Your saved progress will remain available if you return.</p>
+      <div class="modal-actions">
+        <button id="stayButton" class="btn btn-gold">STAY AND CONTINUE</button>
+        <button id="leaveButton" class="btn btn-burgundy">LEAVE PAGE</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="stickyShare" class="sticky-share">
+    <button id="shareStickyButton" class="btn btn-whatsapp btn-large pulse">SHARE CELEBRATION ON WHATSAPP</button>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/comments.js"></script>
+  <script src="assets/js/gift-selector.js"></script>
+  <script src="assets/js/sharing.js"></script>
+  <script src="assets/js/conversation.js"></script>
+  <script src="assets/js/exit-popup.js"></script>
+  <script src="assets/js/webpushr.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
