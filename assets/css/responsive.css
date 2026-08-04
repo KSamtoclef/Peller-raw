@@ -1,0 +1,18 @@
+@media (max-width: 420px) {
+  h1 { font-size: 33px; }
+  h2 { font-size: 27px; }
+  .hero-frame { height: 194px; }
+  .progress-wrap { align-items: flex-start; }
+}
+
+@media (max-width: 360px) {
+  h1 { font-size: 30px; }
+  .hero { padding: 13px; }
+  .hero-frame { height: 170px; border-radius: 20px; }
+  .gift-badges { grid-template-columns: 1fr; }
+  .mini-proof { margin: 13px; gap: 6px; }
+  .panel { margin: 14px; padding: 17px; }
+  .progress-wrap { gap: 12px; padding: 12px; }
+  .progress-ring { width: 84px; height: 84px; }
+  .progress-ring::before { width: 64px; height: 64px; }
+}
