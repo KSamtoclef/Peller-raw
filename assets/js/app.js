@@ -11,8 +11,13 @@ function load(){try{const saved=JSON.parse(localStorage.getItem(config.storageKe
 function save(){try{localStorage.setItem(config.storageKey,JSON.stringify(state))}catch(e){}}
 function firstName(){return state.name.trim().split(/\s+/)[0]||'Friend'}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));state.stage=id;save();$('stickyShare').style.display=id==='shareScreen'?'block':'none';scrollTo({top:0,behavior:'smooth'});if(id==='shareScreen')renderShare();if(id==='finalScreen')renderFinal();conversation?.render()}
-function giftImage(g,className='gift-image'){return `<img class="${className}" src="${g.image}" alt="${g.imageAlt}" loading="lazy">`}
+function giftImage(g,className='gift-image'){return `<img class="${className}" src="${g.image}" alt="${g.imageAlt}">`}
 function giftSummary(id,compact=false){const g=gifts[id];return `<div class="gift-icon">${giftImage(g)}</div><div><strong>${g.title}</strong><span>${compact?'Selected gift':g.description}</span></div>`}
+function renderLandingBadges(){
+  const badges=$('giftBadges');if(!badges)return;
+  badges.innerHTML=Object.entries(gifts).map(([id,g])=>`<button class="visual-badge" data-quick-gift="${id}"><span class="gift-badge-image">${giftImage(g,'badge-gift-image')}</span><strong>${id==='data'?'Up to 100GB':id==='cash'?'Up to ₦50,000':g.title}</strong></button>`).join('');
+  badges.querySelectorAll('[data-quick-gift]').forEach(button=>button.onclick=()=>selectGift(button.dataset.quickGift));
+}
 function selectGift(id){state.gift=id;save();$('giftSheet').classList.remove('show');$('giftSheet').setAttribute('aria-hidden','true');$('selectedGiftSummary').innerHTML=giftSummary(id);showScreen('registerScreen')}
 function runTransition(next){$('transitionOverlay').classList.add('show');const titles=['Saving Your Selection…','Preparing Your Next Step…','Ready to Continue'];let i=0;$('transitionTitle').textContent=titles[0];const timer=setInterval(()=>{i+=1;$('transitionTitle').textContent=titles[i]||titles[2];if(i===2){clearInterval(timer);setTimeout(()=>{$('transitionOverlay').classList.remove('show');next()},500)}},650)}
 function submitRegistration(){const name=$('fullName').value.trim(),phone=$('phoneNumber').value.replace(/\s+/g,'');const validName=name.length>=3,validPhone=/^(?:\+?234|0)[789][01]\d{8}$/.test(phone);$('fullNameError').classList.toggle('show',!validName);$('phoneError').classList.toggle('show',!validPhone);if(!validName||!validPhone)return;state.name=name;state.phone=phone;save();runTransition(()=>state.gift==='data'?showScreen('dataScreen'):showScreen('shareScreen'))}
@@ -24,6 +29,7 @@ async function sharePage(){state.localShares+=1;save();const data={title:'Peller
 load();
 $('demoBanner').textContent=config.demoBanner;$('demoBanner').style.display=config.demoBanner?'block':'none';
 $('heroImage').addEventListener('error',()=>{$('heroImage').style.display='none';$('heroFallback').style.display='grid'});
+renderLandingBadges();
 window.renderGiftSelector(selectGift);
 $('openGiftSelector').onclick=()=>{$('giftSheet').classList.add('show');$('giftSheet').setAttribute('aria-hidden','false')};
 $('closeGiftSelector').onclick=()=>{$('giftSheet').classList.remove('show');$('giftSheet').setAttribute('aria-hidden','true')};
