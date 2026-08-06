@@ -5,30 +5,45 @@ function assertConfig(){
 }
 async function request(path,options={}){
   assertConfig();
-  const response=await fetch(`${config.url}/rest/v1/${path}`,{
-    ...options,
-    headers:{
-      apikey:config.anonKey,
-      Authorization:`Bearer ${config.anonKey}`,
-      'Content-Type':'application/json',
-      Prefer:'return=minimal',
-      ...(options.headers||{})
-    }
-  });
+  let response;
+  try{
+    response=await fetch(`${config.url}/rest/v1/${path}`,{
+      ...options,
+      headers:{
+        apikey:config.anonKey,
+        Authorization:`Bearer ${config.anonKey}`,
+        'Content-Type':'application/json',
+        Prefer:'return=minimal',
+        ...(options.headers||{})
+      }
+    });
+  }catch(error){
+    throw new Error('Network request to Supabase failed.');
+  }
   if(!response.ok){
     const detail=await response.text();
-    throw new Error(detail||`Supabase request failed (${response.status})`);
+    const error=new Error(detail||`Supabase request failed (${response.status})`);
+    error.status=response.status;
+    throw error;
   }
   return response;
 }
 window.PellerRegistration={
   async save(payload){
-    const query=`${config.table}?on_conflict=registration_reference`;
-    return request(query,{
-      method:'POST',
-      headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify({...payload,updated_at:new Date().toISOString()})
-    });
+    try{
+      return await request(config.table,{
+        method:'POST',
+        body:JSON.stringify({...payload,updated_at:new Date().toISOString()})
+      });
+    }catch(error){
+      if(error.status===409||String(error.message).includes('23505')){
+        return request(`${config.table}?registration_reference=eq.${encodeURIComponent(payload.registration_reference)}`,{
+          method:'PATCH',
+          body:JSON.stringify({...payload,updated_at:new Date().toISOString()})
+        });
+      }
+      throw error;
+    }
   },
   async updateNetwork(reference,mobileNetwork){
     if(!reference||!mobileNetwork)return;
