@@ -5,6 +5,11 @@ window.WHITE_WEDDING_CONFIG = {
   minimumWhatsAppAwayMs: 3000,
   shareCooldownMs: 1600,
   facebookExitUrl: '',
+  supabase: {
+    url: 'https://cqnovqvmxwmfngupgtov.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxbm92cXZteHdtZm5ndXBndG92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyODA0NzQsImV4cCI6MjA5OTg1NjQ3NH0.ZamXPTmqVsdHu1pD1EZLxPeSqWemBsj28Y1f-NOCEZs',
+    table: 'peller_gift_registrations'
+  },
   giftLinks: {
     cow: '',
     data: '',
